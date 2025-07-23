@@ -1,7 +1,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { performanceMonitor } from '@/lib/utils/performance';
-import { Typography, Stack, Card } from '@/design-system';
+import { Typography, Stack } from '@/design-system';
+import { Card } from '@/components/ui/card';
 
 interface PerformanceStats {
   slowRenders: number;
