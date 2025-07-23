@@ -5,11 +5,18 @@ export * from './typography';
 export * from './animations';
 export * from './elevation';
 
+// Import tokens for combined export
+import { colorTokens } from './colors';
+import { spacingTokens } from './spacing';
+import { typographyTokens } from './typography';
+import { animationTokens } from './animations';
+import { elevationTokens } from './elevation';
+
 // Combined tokens object
 export const tokens = {
-  colors: require('./colors').colorTokens,
-  spacing: require('./spacing').spacingTokens,
-  typography: require('./typography').typographyTokens,
-  animations: require('./animations').animationTokens,
-  elevation: require('./elevation').elevationTokens,
+  colors: colorTokens,
+  spacing: spacingTokens,
+  typography: typographyTokens,
+  animations: animationTokens,
+  elevation: elevationTokens,
 } as const;

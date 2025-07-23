@@ -46,7 +46,7 @@ const typographyVariants = cva('', {
 });
 
 interface TypographyProps
-  extends React.HTMLAttributes<HTMLElement>,
+  extends Omit<React.HTMLAttributes<HTMLElement>, 'color'>,
     VariantProps<typeof typographyVariants> {
   as?: React.ElementType;
   children: React.ReactNode;
@@ -58,7 +58,7 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
     
     return (
       <Component
-        className={cn(typographyVariants({ variant, color, align, className }))}
+        className={cn(typographyVariants({ variant, color, align }), className)}
         ref={ref}
         {...props}
       >

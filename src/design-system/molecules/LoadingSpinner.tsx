@@ -29,7 +29,7 @@ const spinnerVariants = cva(
 );
 
 interface LoadingSpinnerProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'color'>,
     VariantProps<typeof spinnerVariants> {
   label?: string;
 }
@@ -39,7 +39,7 @@ const LoadingSpinner = React.forwardRef<HTMLDivElement, LoadingSpinnerProps>(
     return (
       <div
         ref={ref}
-        className={cn(spinnerVariants({ size, color, className }))}
+        className={cn(spinnerVariants({ size, color }), className)}
         role="status"
         aria-label={label}
         {...props}
