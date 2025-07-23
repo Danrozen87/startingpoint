@@ -41,7 +41,7 @@ interface ColorCategoryProps {
 
 const ColorCategory: React.FC<ColorCategoryProps> = ({ title, colors }) => (
   <div className="space-y-4">
-    <Typography variant="h4">{title}</Typography>
+    <Typography variant="sectionHeader">{title}</Typography>
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-4">
       {Object.entries(colors).map(([key, value]) => {
         if (typeof value === 'string') {
@@ -73,7 +73,7 @@ export const ColorPalette: React.FC = () => {
     <Container size="full" className="py-8">
       <Stack direction="column" gap={12}>
         <div className="text-center space-y-4">
-          <Typography variant="h1">Design System Color Palette</Typography>
+          <Typography variant="pageTitle">Design System Color Palette</Typography>
           <Typography variant="lead" color="muted">
             Low-cognitive-strain colors optimized for premium appearance
           </Typography>
@@ -86,7 +86,7 @@ export const ColorPalette: React.FC = () => {
         <ColorCategory title="Accent Colors" colors={colorCategories.accent} />
         
         <div className="mt-8 p-6 bg-muted rounded-lg">
-          <Typography variant="h5" className="mb-4">Theme Colors</Typography>
+          <Typography variant="subsectionHeader" className="mb-4">Theme Colors</Typography>
           <Typography variant="body" color="muted">
             Theme colors are CSS variables that automatically adapt to light/dark mode.
             They are defined in your CSS and reference the appropriate color tokens.

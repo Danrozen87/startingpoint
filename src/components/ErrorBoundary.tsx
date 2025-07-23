@@ -76,7 +76,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
               </div>
               
               <Stack direction="column" align="center" gap={3}>
-                <Typography variant="h1" align="center" className="text-4xl font-bold">
+                <Typography variant="pageTitle" align="center">
                   Something went wrong
                 </Typography>
                 <Typography variant="body" align="center" color="muted" className="max-w-md">

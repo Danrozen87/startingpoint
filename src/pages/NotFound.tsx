@@ -27,10 +27,10 @@ const NotFound = () => {
           </div>
           
           <Stack direction="column" align="center" gap={3}>
-            <Typography variant="h1" align="center" className="text-6xl font-bold">
+            <Typography variant="heroTitle" align="center" className="text-6xl">
               404
             </Typography>
-            <Typography variant="h2" align="center" color="muted">
+            <Typography variant="sectionTitle" align="center" color="muted">
               Page Not Found
             </Typography>
             <Typography variant="body" align="center" color="muted" className="max-w-md">

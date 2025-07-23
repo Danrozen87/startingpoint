@@ -31,7 +31,7 @@ const EmptyState = React.memo(React.forwardRef<HTMLDivElement, EmptyStateProps>(
             </div>
           )}
           <Stack direction="column" align="center" gap={2}>
-            <Typography variant="h3" color="default" as="h2">
+            <Typography variant="cardTitle" color="default" as="h2">
               {title}
             </Typography>
             {description && (
