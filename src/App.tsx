@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LazyIndexPage from "./pages/LazyIndex";
 import LazyNotFoundPage from "./pages/LazyNotFound";
 import PerformanceMonitor from "./components/dev/PerformanceMonitor";
+import { AccessibilityProvider } from '@/components/providers/AccessibilityProvider';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,21 +21,27 @@ const queryClient = new QueryClient({
   },
 });
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LazyIndexPage />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<LazyNotFoundPage />} />
-        </Routes>
-      </BrowserRouter>
-      <PerformanceMonitor />
-    </TooltipProvider>
-  </QueryClientProvider>
-);
-
-export default App;
+export default function App() {
+  return (
+    <AccessibilityProvider>
+      <div className="min-h-screen bg-background font-sans antialiased">
+        <div id="main-content" className="relative flex min-h-screen flex-col">
+          <QueryClientProvider client={queryClient}>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<LazyIndexPage />} />
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<LazyNotFoundPage />} />
+                </Routes>
+              </BrowserRouter>
+              <PerformanceMonitor />
+            </TooltipProvider>
+          </QueryClientProvider>
+        </div>
+      </div>
+    </AccessibilityProvider>
+  );
+}

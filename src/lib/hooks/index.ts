@@ -1,4 +1,3 @@
-
 export * from './useLocalStorage';
 export * from './useDebounce';
 export * from './useMediaQuery';
@@ -8,3 +7,4 @@ export * from './useStaggeredReveal';
 export * from './useScrollAnimation';
 export * from './usePurposefulTransition';
 export * from './useDesignSystem';
+export * from './useAccessibility';
