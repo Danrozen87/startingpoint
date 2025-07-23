@@ -3,7 +3,7 @@
 // AI-optimized structure with logical organization
 
 // === TOKENS ===
-// Core design tokens - colors, spacing, typography, animations, elevation
+// Core design tokens - colors, spacing, typography, animations, elevation, breakpoints
 export * from './tokens';
 
 // === ATOMS ===
@@ -20,7 +20,21 @@ export * from './components';
 
 // === UTILITIES ===
 // Design system utilities and helpers
-export { tokenUtils, colorUtils, themeUtils, performanceUtils } from './tokens/utilities';
+export { 
+  tokenUtils, 
+  colorUtils, 
+  themeUtils, 
+  performanceUtils,
+  fontUtils,
+  semanticUtils,
+  validationUtils,
+  performanceUtils as typographyPerformanceUtils,
+  mediaQueries,
+  containerQueries,
+  responsiveUtils,
+  viewportUtils,
+  cssUtils,
+} from './tokens';
 
 // === TYPES ===
 // All design system types for better TypeScript support
@@ -33,6 +47,10 @@ export type {
   AccentColor,
   SpacingToken,
   AnimationToken,
+  TypographyToken,
+  FontFamily,
+  SemanticTypography,
+  BreakpointToken,
 } from './tokens';
 
 export type {

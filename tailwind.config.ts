@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -11,11 +10,51 @@ export default {
 	],
 	prefix: "",
 	theme: {
+		// Enhanced breakpoint system (320px to 8K)
+		screens: {
+			'xs': '320px',
+			'sm': '480px',
+			'md': '768px',
+			'lg': '1024px',
+			'xl': '1280px',
+			'2xl': '1536px',
+			'3xl': '1920px',
+			'4xl': '2560px',
+			'5xl': '3440px',
+			'6xl': '3840px',
+			'7xl': '5120px',
+			'8xl': '7680px',
+		},
 		container: {
 			center: true,
-			padding: '2rem',
+			padding: {
+				DEFAULT: '1rem',
+				xs: '1rem',
+				sm: '1.5rem',
+				md: '2rem',
+				lg: '3rem',
+				xl: '4rem',
+				'2xl': '5rem',
+				'3xl': '6rem',
+				'4xl': '8rem',
+				'5xl': '10rem',
+				'6xl': '12rem',
+				'7xl': '14rem',
+				'8xl': '16rem',
+			},
 			screens: {
-				'2xl': '1400px'
+				'xs': '100%',
+				'sm': '100%',
+				'md': '100%',
+				'lg': '1024px',
+				'xl': '1280px',
+				'2xl': '1536px',
+				'3xl': '1920px',
+				'4xl': '2560px',
+				'5xl': '3440px',
+				'6xl': '3840px',
+				'7xl': '5120px',
+				'8xl': '7680px',
 			}
 		},
 		extend: {
@@ -125,16 +164,44 @@ export default {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
+			// Three-font system
 			fontFamily: {
+				// Rare headers - Playfair Display for special occasions
+				rare: ['Playfair Display', 'Georgia', 'serif'],
+				// UI headers - Manrope for everyday interface elements
+				ui: ['Manrope', 'system-ui', 'sans-serif'],
+				// Body text - Inter for reading content
+				body: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+				// Legacy support
 				sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
 				mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
 			},
 			fontSize: {
 				'2xs': ['0.625rem', { lineHeight: '0.875rem' }],
+				// Fluid typography for rare headers
+				'rare-sm': ['clamp(1.5rem, 4vw, 2rem)', { lineHeight: '1.2', letterSpacing: '-0.02em' }],
+				'rare-md': ['clamp(2rem, 5vw, 2.5rem)', { lineHeight: '1.2', letterSpacing: '-0.02em' }],
+				'rare-lg': ['clamp(2.5rem, 6vw, 3rem)', { lineHeight: '1.1', letterSpacing: '-0.03em' }],
+				'rare-xl': ['clamp(3rem, 7vw, 4rem)', { lineHeight: '1.1', letterSpacing: '-0.03em' }],
+				'rare-2xl': ['clamp(4rem, 8vw, 5rem)', { lineHeight: '1.05', letterSpacing: '-0.04em' }],
+				'rare-3xl': ['clamp(5rem, 10vw, 6rem)', { lineHeight: '1.05', letterSpacing: '-0.04em' }],
 			},
 			spacing: {
 				'18': '4.5rem',
 				'88': '22rem',
+				// Responsive spacing
+				'section-xs': '2rem',
+				'section-sm': '3rem',
+				'section-md': '4rem',
+				'section-lg': '6rem',
+				'section-xl': '8rem',
+				'section-2xl': '10rem',
+				'section-3xl': '12rem',
+				'section-4xl': '16rem',
+				'section-5xl': '20rem',
+				'section-6xl': '24rem',
+				'section-7xl': '28rem',
+				'section-8xl': '32rem',
 			},
 			animation: {
 				'fade-in': 'fade-in 0.3s ease-out',
