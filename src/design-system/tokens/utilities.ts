@@ -28,12 +28,12 @@ export const colorUtils = {
   },
 
   // Get semantic color
-  getSemantic: (color: SemanticColor, scale: ColorScale = '500'): string => {
+  getSemantic: (color: SemanticColor, scale: ColorScale = 500): string => {
     return colorTokens.semantic[color][scale];
   },
 
   // Get brand color
-  getBrand: (color: 'primary' | 'secondary', scale: ColorScale = '500'): string => {
+  getBrand: (color: 'primary' | 'secondary', scale: ColorScale = 500): string => {
     return colorTokens.brand[color][scale];
   },
 
