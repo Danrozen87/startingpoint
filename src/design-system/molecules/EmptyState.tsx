@@ -26,7 +26,7 @@ const EmptyState = React.memo(React.forwardRef<HTMLDivElement, EmptyStateProps>(
       >
         <Stack direction="column" align="center" gap={6}>
           {icon && (
-            <div className="flex items-center justify-center w-16 h-16 mx-auto bg-muted rounded-full">
+            <div className="flex items-center justify-center w-16 h-16 mx-auto bg-muted rounded-full transition-colors">
               {icon}
             </div>
           )}

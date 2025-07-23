@@ -1,13 +1,16 @@
 
-// Import tokens for combined export
-import { colorTokens } from './colors';
-import { spacingTokens } from './spacing';
+// Perfect barrel export for all design tokens
+// AI-optimized structure with clear organization
+
+// Core token imports
+import { colorTokens, colorCategories, type ColorToken, type ColorCategory, type ColorScale, type SemanticColor, type BrandColor, type AccentColor } from './colors';
+import { spacingTokens, type SpacingToken, getSpacing } from './spacing';
 import { typographyTokens } from './typography';
-import { animationTokens } from './animations';
+import { animationTokens, type AnimationToken } from './animations';
 import { elevationTokens } from './elevation';
 
-// Combined tokens object
-export const tokens = {
+// Combined tokens object - single source of truth
+export const designTokens = {
   colors: colorTokens,
   spacing: spacingTokens,
   typography: typographyTokens,
@@ -15,18 +18,36 @@ export const tokens = {
   elevation: elevationTokens,
 } as const;
 
-// Export individual token modules
-export * from './colors';
-export * from './spacing';
-export * from './typography';
-export * from './animations';
-export * from './elevation';
+// Individual token exports
+export {
+  // Colors
+  colorTokens,
+  colorCategories,
+  type ColorToken,
+  type ColorCategory,
+  type ColorScale,
+  type SemanticColor,
+  type BrandColor,
+  type AccentColor,
 
-// CSS-in-JS utilities for design tokens
-export const getCSSVariable = (token: string): string => `var(--${token})`;
-export const getSpacing = (key: keyof typeof spacingTokens): string => spacingTokens[key];
-export const getColor = (category: keyof typeof colorTokens, shade?: string): string => {
-  const colorCategory = colorTokens[category];
-  if (typeof colorCategory === 'string') return colorCategory;
-  return shade ? (colorCategory as any)[shade] : (colorCategory as any)[500];
+  // Spacing
+  spacingTokens,
+  type SpacingToken,
+  getSpacing,
+
+  // Typography
+  typographyTokens,
+
+  // Animations
+  animationTokens,
+  type AnimationToken,
+
+  // Elevation
+  elevationTokens,
 };
+
+// Token utilities - centralized helpers
+export * from './utilities';
+
+// Re-export legacy tokens for backward compatibility
+export const tokens = designTokens;
