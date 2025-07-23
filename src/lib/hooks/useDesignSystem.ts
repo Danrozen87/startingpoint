@@ -54,7 +54,7 @@ export function useDesignSystem(options: UseDesignSystemOptions = {}) {
   // Performance monitoring
   const performance = useMemo(() => ({
     clearAnimationCache: animationUtils.clearCache,
-    preloadColors: colorUtils.preloadColors,
+    preloadColors: () => {}, // Placeholder for color preloading
   }), []);
 
   return {

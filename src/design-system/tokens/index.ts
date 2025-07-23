@@ -44,7 +44,15 @@ export {
   type BreakpointToken,
 } from './breakpoints';
 
+
 // === OPTIMIZED COMBINED TOKENS ===
+import { colorTokens, colorCategories } from './colors';
+import { spacingTokens, getSpacing } from './spacing';
+import { typographyTokens } from './typography';
+import { animationTokens } from './animations';
+import { elevationTokens } from './elevation';
+import { breakpointTokens, breakpointCategories, containerSizes, fluidSpacing } from './breakpoints';
+
 export const designTokens = {
   colors: colorTokens,
   spacing: spacingTokens,

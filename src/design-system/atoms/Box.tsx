@@ -44,7 +44,7 @@ const useSpacingClasses = (spacingProps: Pick<BoxProps, 'p' | 'px' | 'py' | 'pt'
     if (ml) classes.push(`ml-${ml}`);
     
     return classes;
-  }, [p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml]);
+  }, [spacingProps.p, spacingProps.px, spacingProps.py, spacingProps.pt, spacingProps.pr, spacingProps.pb, spacingProps.pl, spacingProps.m, spacingProps.mx, spacingProps.my, spacingProps.mt, spacingProps.mr, spacingProps.mb, spacingProps.ml]);
 };
 
 const Box = React.memo(React.forwardRef<HTMLDivElement, BoxProps>(

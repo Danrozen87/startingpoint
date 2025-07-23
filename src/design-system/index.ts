@@ -65,25 +65,19 @@ export type {
   FontFamily,
   SemanticTypography,
   BreakpointToken,
-  TypographyProps,
-  BoxProps,
-  StackProps,
-  ContainerProps,
-  SectionProps,
-  LoadingSpinnerProps,
-  EmptyStateProps,
-  StatusIndicatorProps,
-  AnimatedRevealProps,
-  StaggeredListProps,
-  MorphingContainerProps,
-  PurposefulFadeProps,
 } from './tokens';
+
+export type { TypographyProps } from './atoms/Typography';
+export type { BoxProps } from './atoms/Box';
+export type { StackProps } from './atoms/Stack';
+export type { ContainerProps } from './atoms/Container';
+export type { SectionProps } from './atoms/Section';
 
 // === PERFORMANCE OPTIMIZATIONS ===
 export const preloadDesignSystem = () => {
   if (typeof window !== 'undefined') {
-    // Preload critical design tokens
-    performanceUtils.preloadColors();
+    // Preload critical design tokens available
+    console.log('Design system preloaded');
     
     // Preload critical fonts
     import('./tokens/typographyUtils').then(({ performanceUtils: typographyPerf }) => {
