@@ -8,3 +8,5 @@ export * from './useScrollAnimation';
 export * from './usePurposefulTransition';
 export * from './useDesignSystem';
 export * from './useAccessibility';
+export { logger, useLogger } from '../utils/logger';
+export { errorReporter, useErrorReporting } from '../utils/errorReporting';

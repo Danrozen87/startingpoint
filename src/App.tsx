@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LazyIndexPage from "./pages/LazyIndex";
 import LazyNotFoundPage from "./pages/LazyNotFound";
 import PerformanceMonitor from "./components/dev/PerformanceMonitor";
+import LoggingDashboard from "./components/dev/LoggingDashboard";
 import { AccessibilityProvider } from '@/components/providers/AccessibilityProvider';
 
 const queryClient = new QueryClient({
@@ -38,6 +39,7 @@ export default function App() {
                 </Routes>
               </BrowserRouter>
               <PerformanceMonitor />
+              <LoggingDashboard />
             </TooltipProvider>
           </QueryClientProvider>
         </div>
