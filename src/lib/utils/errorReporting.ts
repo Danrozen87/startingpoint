@@ -5,6 +5,8 @@
  */
 
 import { logger } from './logger';
+import { errorGrouper } from './intelligentErrorGrouping';
+import { sessionReplayRecorder } from './sessionReplay';
 
 interface ErrorReport {
   id: string;
@@ -229,11 +231,30 @@ class ErrorReporter {
 
     this.errorQueue.push(report);
     
+    // Add to intelligent grouping
+    const errorInstance = {
+      id: report.id,
+      message: report.message,
+      stack: report.stack,
+      timestamp: report.timestamp,
+      url: report.url,
+      userAgent: report.userAgent,
+      userId: report.userId,
+      sessionId: report.sessionId,
+      context: report.context
+    };
+    
+    const group = errorGrouper.addError(errorInstance);
+    
+    // Record in session replay
+    sessionReplayRecorder.recordError(error, context);
+    
     // Log locally as well
     logger.error('Error reported', { 
       errorId: report.id,
       fingerprint: report.fingerprint,
       severity: report.severity,
+      groupId: group.id,
       ...context 
     });
 
@@ -257,6 +278,9 @@ class ErrorReporter {
     };
 
     this.performanceQueue.push(report);
+    
+    // Record in session replay
+    sessionReplayRecorder.recordPerformanceMetric(metric, value);
     
     // Log performance metrics
     logger.logPerformance(metric, value);

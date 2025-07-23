@@ -13,7 +13,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Typography, Stack } from '@/design-system';
 import { logger, type LogEntry, type LogLevel } from '@/lib/utils/logger';
 import { errorReporter } from '@/lib/utils/errorReporting';
-import { performanceMonitor } from '@/lib/utils/performance';
+import { performanceMonitor } from '@/lib/utils/performanceMonitor';
 import { 
   X, 
   Trash2, 
@@ -138,7 +138,7 @@ const LoggingDashboard: React.FC = () => {
     setPerformanceMetrics([]);
   };
 
-  if (process.env.NODE_ENV !== 'development' || !isVisible) {
+  if (import.meta.env.MODE !== 'development' || !isVisible) {
     return null;
   }
 

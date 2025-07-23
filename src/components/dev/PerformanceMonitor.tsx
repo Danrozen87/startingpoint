@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState, useCallback } from 'react';
-import { performanceMonitor } from '@/lib/utils/performance';
+import { performanceMonitor } from '@/lib/utils/performanceMonitor';
 import { Typography, Stack } from '@/design-system';
 import { Card } from '@/components/ui/card';
 
