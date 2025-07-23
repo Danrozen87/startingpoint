@@ -34,7 +34,7 @@ interface LoadingSpinnerProps
   label?: string;
 }
 
-const LoadingSpinner = React.forwardRef<HTMLDivElement, LoadingSpinnerProps>(
+const LoadingSpinner = React.memo(React.forwardRef<HTMLDivElement, LoadingSpinnerProps>(
   ({ className, size, color, label = 'Loading...', ...props }, ref) => {
     return (
       <div
@@ -48,7 +48,7 @@ const LoadingSpinner = React.forwardRef<HTMLDivElement, LoadingSpinnerProps>(
       </div>
     );
   }
-);
+));
 
 LoadingSpinner.displayName = 'LoadingSpinner';
 

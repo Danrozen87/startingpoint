@@ -63,11 +63,11 @@ interface StackProps
   children: React.ReactNode;
 }
 
-const Stack = React.forwardRef<HTMLDivElement, StackProps>(
+const Stack = React.memo(React.forwardRef<HTMLDivElement, StackProps>(
   ({ className, direction, align, justify, gap, wrap, as: Component = 'div', children, ...props }, ref) => {
     return (
       <Component
-        className={cn(stackVariants({ direction, align, justify, gap, wrap, className }))}
+        className={cn(stackVariants({ direction, align, justify, gap, wrap }), className)}
         ref={ref}
         {...props}
       >
@@ -75,7 +75,7 @@ const Stack = React.forwardRef<HTMLDivElement, StackProps>(
       </Component>
     );
   }
-);
+));
 
 Stack.displayName = 'Stack';
 

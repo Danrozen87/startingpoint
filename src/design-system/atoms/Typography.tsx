@@ -52,7 +52,7 @@ interface TypographyProps
   children: React.ReactNode;
 }
 
-const Typography = React.forwardRef<HTMLElement, TypographyProps>(
+const Typography = React.memo(React.forwardRef<HTMLElement, TypographyProps>(
   ({ className, variant, color, align, as, children, ...props }, ref) => {
     const Component = as || getDefaultElement(variant);
     
@@ -66,7 +66,7 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
       </Component>
     );
   }
-);
+));
 
 Typography.displayName = 'Typography';
 

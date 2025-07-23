@@ -11,7 +11,7 @@ interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
   action?: React.ReactNode;
 }
 
-const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
+const EmptyState = React.memo(React.forwardRef<HTMLDivElement, EmptyStateProps>(
   ({ className, icon, title, description, action, ...props }, ref) => {
     return (
       <div
@@ -20,6 +20,8 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
           'flex flex-col items-center justify-center text-center py-12 px-4',
           className
         )}
+        role="region"
+        aria-label="Empty state"
         {...props}
       >
         <Stack direction="column" align="center" gap={6}>
@@ -29,7 +31,7 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
             </div>
           )}
           <Stack direction="column" align="center" gap={2}>
-            <Typography variant="h3" color="default">
+            <Typography variant="h3" color="default" as="h2">
               {title}
             </Typography>
             {description && (
@@ -38,12 +40,16 @@ const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
               </Typography>
             )}
           </Stack>
-          {action && action}
+          {action && (
+            <div className="mt-2">
+              {action}
+            </div>
+          )}
         </Stack>
       </div>
     );
   }
-);
+));
 
 EmptyState.displayName = 'EmptyState';
 
