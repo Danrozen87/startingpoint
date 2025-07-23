@@ -4,3 +4,6 @@ export * from './useDebounce';
 export * from './useMediaQuery';
 export * from './usePerformance';
 export * from './useLazyRoute';
+export * from './useStaggeredReveal';
+export * from './useScrollAnimation';
+export * from './usePurposefulTransition';

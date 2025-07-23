@@ -33,6 +33,9 @@ export {
   containerQueries,
   responsiveUtils,
   viewportUtils,
+  animationUtils,
+  animationPerformanceUtils,
+  animationSystemUtils,
 } from './tokens';
 
 // === TYPES ===
@@ -64,6 +67,10 @@ export type {
   LoadingSpinnerProps,
   EmptyStateProps,
   StatusIndicatorProps,
+  AnimatedRevealProps,
+  StaggeredListProps,
+  MorphingContainerProps,
+  PurposefulFadeProps,
 } from './molecules';
 
 // === LEGACY SUPPORT ===

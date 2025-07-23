@@ -70,6 +70,13 @@ export {
 } from './utilities';
 export * from './breakpointUtils';
 
+// Animation utilities
+export {
+  animationUtils,
+  animationPerformanceUtils,
+  animationSystemUtils,
+} from './animationUtils';
+
 // Typography utilities with renamed exports to avoid conflicts
 export {
   fontUtils,
