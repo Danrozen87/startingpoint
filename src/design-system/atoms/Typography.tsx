@@ -74,8 +74,8 @@ interface TypographyProps
   fluid?: boolean;
 }
 
-// Optimized element mapping with memoization
-const getDefaultElement = React.useCallback((variant: string | null | undefined): React.ElementType => {
+// Optimized element mapping
+const getDefaultElement = (variant: string | null | undefined): React.ElementType => {
   switch (variant) {
     case 'heroTitle':
     case 'h1':
@@ -112,7 +112,7 @@ const getDefaultElement = React.useCallback((variant: string | null | undefined)
     default:
       return 'p';
   }
-}, []);
+};
 
 const Typography = React.memo(React.forwardRef<HTMLElement, TypographyProps>(
   ({ className, variant, color, align, responsive, as, children, fluid, ...props }, ref) => {
