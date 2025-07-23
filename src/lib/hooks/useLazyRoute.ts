@@ -1,5 +1,5 @@
 
-import { lazy, ComponentType } from 'react';
+import { lazy, ComponentType, LazyExoticComponent } from 'react';
 
 interface LazyRouteOptions {
   retryCount?: number;
@@ -9,7 +9,7 @@ interface LazyRouteOptions {
 export function useLazyRoute<T extends ComponentType<any>>(
   importFn: () => Promise<{ default: T }>,
   options: LazyRouteOptions = {}
-): T {
+): LazyExoticComponent<T> {
   const { retryCount = 3, retryDelay = 1000 } = options;
 
   return lazy(() => {
