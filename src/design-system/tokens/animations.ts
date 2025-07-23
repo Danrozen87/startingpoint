@@ -63,6 +63,18 @@ export const animationTokens = {
       '0%, 100%': { transform: 'translateY(-25%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
       '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' },
     },
+    'hover-lift': {
+      '0%': { transform: 'translateY(0) scale(1)' },
+      '100%': { transform: 'translateY(-2px) scale(1.02)' },
+    },
+  },
+  // Pre-defined animation combinations
+  classes: {
+    'fade-in': 'animate-fade-in',
+    'hover-lift': 'transition-all duration-200 hover:animate-hover-lift',
+    'interactive': 'transition-all duration-200 hover:scale-105 active:scale-95',
+    'text-gradient': 'bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent',
+    'hover-glow': 'transition-all duration-300 hover:shadow-lg hover:shadow-primary/20',
   },
 } as const;
 

@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LazyIndexPage from "./pages/LazyIndex";
 import LazyNotFoundPage from "./pages/LazyNotFound";
+import PerformanceMonitor from "./components/dev/PerformanceMonitor";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -13,6 +14,9 @@ const queryClient = new QueryClient({
       retry: 3,
       retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
       staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes (replaces cacheTime)
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
     },
   },
 });
@@ -29,6 +33,7 @@ const App = () => (
           <Route path="*" element={<LazyNotFoundPage />} />
         </Routes>
       </BrowserRouter>
+      <PerformanceMonitor />
     </TooltipProvider>
   </QueryClientProvider>
 );

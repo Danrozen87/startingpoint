@@ -1,7 +1,7 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import { type SpacingToken } from '../tokens/spacing';
+import { type SpacingToken, getSpacing } from '../tokens/spacing';
 
 interface BoxProps extends React.HTMLAttributes<HTMLDivElement> {
   as?: React.ElementType;
@@ -22,7 +22,7 @@ interface BoxProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
 }
 
-const Box = React.forwardRef<HTMLDivElement, BoxProps>(
+const Box = React.memo(React.forwardRef<HTMLDivElement, BoxProps>(
   ({ 
     as: Component = 'div',
     className,
@@ -43,22 +43,26 @@ const Box = React.forwardRef<HTMLDivElement, BoxProps>(
     children,
     ...props 
   }, ref) => {
-    const spacingClasses = [
-      p && `p-${p}`,
-      px && `px-${px}`,
-      py && `py-${py}`,
-      pt && `pt-${pt}`,
-      pr && `pr-${pr}`,
-      pb && `pb-${pb}`,
-      pl && `pl-${pl}`,
-      m && `m-${m}`,
-      mx && `mx-${mx}`,
-      my && `my-${my}`,
-      mt && `mt-${mt}`,
-      mr && `mr-${mr}`,
-      mb && `mb-${mb}`,
-      ml && `ml-${ml}`,
-    ].filter(Boolean);
+    const spacingClasses = React.useMemo(() => {
+      const classes = [];
+      
+      if (p) classes.push(`p-${p}`);
+      if (px) classes.push(`px-${px}`);
+      if (py) classes.push(`py-${py}`);
+      if (pt) classes.push(`pt-${pt}`);
+      if (pr) classes.push(`pr-${pr}`);
+      if (pb) classes.push(`pb-${pb}`);
+      if (pl) classes.push(`pl-${pl}`);
+      if (m) classes.push(`m-${m}`);
+      if (mx) classes.push(`mx-${mx}`);
+      if (my) classes.push(`my-${my}`);
+      if (mt) classes.push(`mt-${mt}`);
+      if (mr) classes.push(`mr-${mr}`);
+      if (mb) classes.push(`mb-${mb}`);
+      if (ml) classes.push(`ml-${ml}`);
+      
+      return classes;
+    }, [p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml]);
 
     return (
       <Component
@@ -70,7 +74,7 @@ const Box = React.forwardRef<HTMLDivElement, BoxProps>(
       </Component>
     );
   }
-);
+));
 
 Box.displayName = 'Box';
 

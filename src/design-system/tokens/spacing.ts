@@ -39,3 +39,6 @@ export const spacingTokens = {
 } as const;
 
 export type SpacingToken = keyof typeof spacingTokens;
+
+// Utility function to get spacing value
+export const getSpacing = (token: SpacingToken): string => spacingTokens[token];
