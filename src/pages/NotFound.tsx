@@ -9,10 +9,13 @@ const NotFound = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.error(
-      "404 Error: User attempted to access non-existent route:",
-      location.pathname
-    );
+    // Only log in development to avoid exposing information in production
+    if (process.env.NODE_ENV === 'development') {
+      console.error(
+        "404 Error: User attempted to access non-existent route:",
+        location.pathname
+      );
+    }
   }, [location.pathname]);
 
   return (
@@ -35,7 +38,7 @@ const NotFound = () => {
             </Typography>
           </Stack>
           
-          <Button asChild size="lg" className="mt-4">
+          <Button asChild size="lg" className="mt-4 hover-lift">
             <a href="/">Return to Home</a>
           </Button>
         </Stack>

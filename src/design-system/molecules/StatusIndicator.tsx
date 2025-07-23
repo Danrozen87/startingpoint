@@ -4,19 +4,19 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const statusVariants = cva(
-  'inline-flex items-center rounded-full px-2 py-1 text-xs font-medium',
+  'inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset',
   {
     variants: {
       variant: {
-        success: 'bg-green-100 text-green-800',
-        error: 'bg-red-100 text-red-800',
-        warning: 'bg-yellow-100 text-yellow-800',
-        info: 'bg-blue-100 text-blue-800',
-        default: 'bg-gray-100 text-gray-800',
+        success: 'bg-green-50 text-green-700 ring-green-600/20',
+        error: 'bg-red-50 text-red-700 ring-red-600/20',
+        warning: 'bg-yellow-50 text-yellow-700 ring-yellow-600/20',
+        info: 'bg-blue-50 text-blue-700 ring-blue-600/20',
+        default: 'bg-gray-50 text-gray-700 ring-gray-600/20',
       },
       size: {
-        sm: 'px-2 py-0.5 text-xs',
-        md: 'px-2.5 py-1 text-xs',
+        sm: 'px-1.5 py-0.5 text-xs',
+        md: 'px-2 py-1 text-xs',
         lg: 'px-3 py-1.5 text-sm',
       },
     },
@@ -27,7 +27,7 @@ const statusVariants = cva(
   }
 );
 
-const dotVariants = cva('mr-1.5 h-1.5 w-1.5 rounded-full', {
+const dotVariants = cva('mr-1.5 rounded-full', {
   variants: {
     variant: {
       success: 'bg-green-400',
@@ -36,9 +36,15 @@ const dotVariants = cva('mr-1.5 h-1.5 w-1.5 rounded-full', {
       info: 'bg-blue-400',
       default: 'bg-gray-400',
     },
+    size: {
+      sm: 'h-1 w-1',
+      md: 'h-1.5 w-1.5',
+      lg: 'h-2 w-2',
+    },
   },
   defaultVariants: {
     variant: 'default',
+    size: 'md',
   },
 });
 
@@ -49,20 +55,22 @@ interface StatusIndicatorProps
   showDot?: boolean;
 }
 
-const StatusIndicator = React.forwardRef<HTMLSpanElement, StatusIndicatorProps>(
+const StatusIndicator = React.memo(React.forwardRef<HTMLSpanElement, StatusIndicatorProps>(
   ({ className, variant, size, showDot = true, children, ...props }, ref) => {
     return (
       <span
         ref={ref}
         className={cn(statusVariants({ variant, size, className }))}
+        role="status"
+        aria-label={`Status: ${children}`}
         {...props}
       >
-        {showDot && <span className={cn(dotVariants({ variant }))} />}
+        {showDot && <span className={cn(dotVariants({ variant, size }))} aria-hidden="true" />}
         {children}
       </span>
     );
   }
-);
+));
 
 StatusIndicator.displayName = 'StatusIndicator';
 
