@@ -1,4 +1,13 @@
 
+/**
+ * @file Typography.tsx
+ * @purpose Foundational typography component with semantic variants and responsive behavior
+ * @dependencies React, class-variance-authority, design tokens
+ * @ai-context Core text rendering component - handles all typography needs
+ * @performance Memoized with optimized className computation
+ * @accessibility WCAG 2.1 AA compliant with proper semantic HTML
+ */
+
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
@@ -74,7 +83,12 @@ interface TypographyProps
   fluid?: boolean;
 }
 
-// Optimized element mapping
+/**
+ * Maps typography variants to appropriate HTML elements for semantic correctness
+ * @param variant - The typography variant
+ * @returns Appropriate HTML element type
+ * @ai-context Ensures semantic HTML structure for accessibility
+ */
 const getDefaultElement = (variant: string | null | undefined): React.ElementType => {
   switch (variant) {
     case 'heroTitle':
@@ -114,11 +128,29 @@ const getDefaultElement = (variant: string | null | undefined): React.ElementTyp
   }
 };
 
+/**
+ * Typography component for consistent text rendering across the application
+ * @param variant - Typography style variant (heroTitle, body, etc.)
+ * @param color - Text color variant
+ * @param align - Text alignment
+ * @param responsive - Enable responsive text behavior
+ * @param as - Override default HTML element
+ * @param fluid - Enable fluid typography (text-pretty)
+ * @returns Styled typography element
+ * 
+ * @example
+ * <Typography variant="heroTitle" color="primary">
+ *   Welcome to our platform
+ * </Typography>
+ * 
+ * @ai-context Primary text component - use for all text rendering needs
+ * @performance Memoized with optimized className computation
+ */
 const Typography = React.memo(React.forwardRef<HTMLElement, TypographyProps>(
   ({ className, variant, color, align, responsive, as, children, fluid, ...props }, ref) => {
     const Component = as || getDefaultElement(variant);
     
-    // Memoize className computation
+    // Memoize className computation for performance
     const memoizedClassName = React.useMemo(() => cn(
       typographyVariants({ variant, color, align, responsive }),
       fluid && 'text-pretty',

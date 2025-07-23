@@ -1,4 +1,13 @@
 
+/**
+ * @file index.ts
+ * @purpose Main entry point for the design system - provides optimized barrel exports
+ * @dependencies All design system tokens, components, and utilities
+ * @ai-context Central hub for design system access - start here for component imports
+ * @performance Tree-shaking optimized with granular exports
+ * @complexity Medium - orchestrates multiple subsystems
+ */
+
 // Optimized barrel export for entire design system
 // Tree-shaking optimized with granular exports
 
@@ -74,6 +83,11 @@ export type { ContainerProps } from './atoms/Container';
 export type { SectionProps } from './atoms/Section';
 
 // === PERFORMANCE OPTIMIZATIONS ===
+/**
+ * Preloads critical design system resources for better performance
+ * @ai-context Call this early in application lifecycle
+ * @performance Critical for initial load performance
+ */
 export const preloadDesignSystem = () => {
   if (typeof window !== 'undefined') {
     // Preload critical design tokens available
