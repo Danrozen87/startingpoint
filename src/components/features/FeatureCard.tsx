@@ -1,7 +1,7 @@
 
 import React, { memo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Stack, StatusIndicator } from '@/design-system';
+import { Stack, StatusIndicator, Typography } from '@/design-system';
 
 interface Feature {
   title: string;
@@ -20,16 +20,16 @@ const FeatureCard = memo(({ feature, index }: FeatureCardProps) => {
 
   return (
     <Card 
-      className="hover-glow interactive animate-fade-in"
+      className="hover-glow interactive animate-fade-in border-neutral-200 bg-card"
       style={{ animationDelay: `${index * 0.1}s` }}
     >
       <CardHeader>
         <Stack direction="row" align="center" gap={3}>
-          <div className="p-2 bg-primary/10 rounded-lg">
+          <div className="p-2 bg-primary/10 rounded-lg border border-primary/20">
             <Icon className="h-5 w-5 text-primary" />
           </div>
           <Stack direction="column" gap={1}>
-            <CardTitle className="text-lg">{title}</CardTitle>
+            <Typography variant="cardTitle" as="h3">{title}</Typography>
             <StatusIndicator variant={status} size="sm">
               {status}
             </StatusIndicator>
@@ -37,9 +37,9 @@ const FeatureCard = memo(({ feature, index }: FeatureCardProps) => {
         </Stack>
       </CardHeader>
       <CardContent>
-        <CardDescription className="text-sm leading-relaxed">
+        <Typography variant="body" color="muted" className="leading-relaxed">
           {description}
-        </CardDescription>
+        </Typography>
       </CardContent>
     </Card>
   );

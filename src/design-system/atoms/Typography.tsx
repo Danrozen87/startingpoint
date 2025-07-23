@@ -17,14 +17,14 @@ const typographyVariants = cva('', {
     variant: {
       // Rare headers - Playfair Display for special occasions
       heroTitle: 'font-rare text-5xl font-bold tracking-tight lg:text-6xl',
-      heroSubtitle: 'font-rare text-lg font-medium tracking-tight lg:text-xl',
-      sectionTitle: 'font-rare text-4xl font-semibold tracking-tight lg:text-5xl',
+      heroSubtitle: 'font-rare text-xl font-medium tracking-tight lg:text-2xl',
+      sectionTitle: 'font-rare text-3xl font-semibold tracking-tight lg:text-4xl',
       
       // UI headers - Manrope for everyday interface
-      pageTitle: 'font-ui text-3xl font-bold tracking-tight lg:text-4xl',
+      pageTitle: 'font-ui text-4xl font-bold tracking-tight lg:text-5xl',
       cardTitle: 'font-ui text-xl font-semibold tracking-tight lg:text-2xl',
-      sectionHeader: 'font-ui text-lg font-semibold tracking-tight lg:text-xl',
-      subsectionHeader: 'font-ui text-base font-medium tracking-tight lg:text-lg',
+      sectionHeader: 'font-ui text-2xl font-semibold tracking-tight lg:text-3xl',
+      subsectionHeader: 'font-ui text-lg font-medium tracking-tight lg:text-xl',
       label: 'font-ui text-sm font-medium tracking-wide uppercase',
       caption: 'font-ui text-xs font-normal tracking-wide',
       
@@ -33,14 +33,8 @@ const typographyVariants = cva('', {
       body: 'font-body text-base leading-relaxed',
       bodySmall: 'font-body text-sm leading-relaxed',
       
-      // Legacy variants for backward compatibility
-      h1: 'font-ui text-4xl font-bold tracking-tight lg:text-5xl',
-      h2: 'font-ui text-3xl font-semibold tracking-tight lg:text-4xl',
-      h3: 'font-ui text-2xl font-semibold tracking-tight lg:text-3xl',
-      h4: 'font-ui text-xl font-semibold tracking-tight lg:text-2xl',
-      h5: 'font-ui text-lg font-semibold tracking-tight lg:text-xl',
-      h6: 'font-ui text-base font-semibold tracking-tight lg:text-lg',
-      lead: 'font-body text-xl text-muted-foreground',
+      // Utility variants
+      lead: 'font-body text-xl text-muted-foreground leading-relaxed',
       large: 'font-ui text-lg font-semibold',
       small: 'font-ui text-sm font-medium leading-none',
       muted: 'font-body text-sm text-muted-foreground',
@@ -52,9 +46,10 @@ const typographyVariants = cva('', {
       primary: 'text-primary',
       secondary: 'text-secondary-foreground',
       destructive: 'text-destructive',
-      success: 'text-green-600',
-      warning: 'text-yellow-600',
-      info: 'text-blue-600',
+      success: 'text-success-600',
+      warning: 'text-warning-600',
+      error: 'text-error-600',
+      info: 'text-info-600',
     },
     align: {
       left: 'text-left',
@@ -92,23 +87,14 @@ interface TypographyProps
 const getDefaultElement = (variant: string | null | undefined): React.ElementType => {
   switch (variant) {
     case 'heroTitle':
-    case 'h1':
-      return 'h1';
     case 'pageTitle':
-    case 'h2':
-      return 'h2';
+      return 'h1';
     case 'sectionTitle':
-    case 'cardTitle':
-    case 'h3':
-      return 'h3';
     case 'sectionHeader':
-    case 'h4':
-      return 'h4';
+      return 'h2';
+    case 'cardTitle':
     case 'subsectionHeader':
-    case 'h5':
-      return 'h5';
-    case 'h6':
-      return 'h6';
+      return 'h3';
     case 'heroSubtitle':
     case 'lead':
     case 'bodyLarge':

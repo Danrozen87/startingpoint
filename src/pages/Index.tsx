@@ -60,15 +60,16 @@ const features: Feature[] = [
 const HeroSection = memo(() => (
   <Stack direction="column" align="center" gap={6}>
     <Typography 
-      variant="h1" 
+      variant="heroTitle" 
       align="center" 
-      className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent animate-fade-in"
+      className="text-gradient animate-fade-in"
     >
       Premium React + Design System
     </Typography>
     <Typography 
-      variant="lead" 
+      variant="heroSubtitle" 
       align="center" 
+      color="muted"
       className="max-w-3xl animate-fade-in"
       style={{ animationDelay: '0.1s' }}
     >
@@ -76,10 +77,10 @@ const HeroSection = memo(() => (
       and AI-optimized architecture for the modern web.
     </Typography>
     <Stack direction="row" gap={4} className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
-      <Button size="lg" className="transition-all duration-200 hover:scale-105">
+      <Button size="lg" className="hover-lift">
         Get Started
       </Button>
-      <Button variant="outline" size="lg" className="transition-all duration-200 hover:scale-105">
+      <Button variant="outline" size="lg" className="hover-lift">
         View Documentation
       </Button>
     </Stack>
@@ -91,7 +92,7 @@ const FeaturesGrid = memo(() => {
 
   return (
     <Stack direction="column" gap={8}>
-      <Typography variant="h2" align="center">
+      <Typography variant="sectionTitle" align="center">
         Enterprise-Ready Features
       </Typography>
       
@@ -115,32 +116,34 @@ const ColorSystemDemo = memo(() => (
     <CardHeader>
       <CardTitle className="flex items-center gap-2">
         <Palette className="h-5 w-5 text-primary" />
-        Color System Demo
+        <Typography variant="cardTitle" as="span">Color System Demo</Typography>
       </CardTitle>
       <CardDescription>
-        Experience the optimized color palette designed for reduced eye strain
+        <Typography variant="body" color="muted">
+          Experience the optimized color palette designed for reduced eye strain
+        </Typography>
       </CardDescription>
     </CardHeader>
     <CardContent>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="space-y-2">
-          <div className="h-12 bg-green-500 rounded-lg" />
-          <Typography variant="small">Success</Typography>
+          <div className="h-12 bg-success-500 rounded-lg" />
+          <Typography variant="bodySmall">Success</Typography>
           <StatusIndicator variant="success">Active</StatusIndicator>
         </div>
         <div className="space-y-2">
-          <div className="h-12 bg-yellow-500 rounded-lg" />
-          <Typography variant="small">Warning</Typography>
+          <div className="h-12 bg-warning-500 rounded-lg" />
+          <Typography variant="bodySmall">Warning</Typography>
           <StatusIndicator variant="warning">Pending</StatusIndicator>
         </div>
         <div className="space-y-2">
-          <div className="h-12 bg-red-500 rounded-lg" />
-          <Typography variant="small">Error</Typography>
+          <div className="h-12 bg-error-500 rounded-lg" />
+          <Typography variant="bodySmall">Error</Typography>
           <StatusIndicator variant="error">Failed</StatusIndicator>
         </div>
         <div className="space-y-2">
-          <div className="h-12 bg-blue-500 rounded-lg" />
-          <Typography variant="small">Info</Typography>
+          <div className="h-12 bg-info-500 rounded-lg" />
+          <Typography variant="bodySmall">Info</Typography>
           <StatusIndicator variant="info">Info</StatusIndicator>
         </div>
       </div>
@@ -155,7 +158,7 @@ const EmptyStateExample = memo(() => (
       title="No Data Available"
       description="Get started by adding your first item or importing existing data. This empty state uses optimized colors for reduced cognitive load."
       action={
-        <Button className="transition-all duration-200 hover:scale-105">
+        <Button className="hover-lift">
           Add First Item
         </Button>
       }
