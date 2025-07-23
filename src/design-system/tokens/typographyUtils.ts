@@ -17,7 +17,8 @@ export const fontUtils = {
   
   // Get font size and line height
   getFontSize: (family: FontFamily, size: keyof typeof typographyTokens.fontSize.ui): [string, { lineHeight: string; letterSpacing?: string }] => {
-    return typographyTokens.fontSize[family][size] || typographyTokens.fontSize[family].base;
+    const sizeKey = size as keyof typeof typographyTokens.fontSize.ui;
+    return typographyTokens.fontSize[family][sizeKey] || typographyTokens.fontSize[family]['md'];
   },
   
   // Get letter spacing for family

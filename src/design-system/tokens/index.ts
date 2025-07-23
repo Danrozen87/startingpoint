@@ -62,9 +62,21 @@ export {
 };
 
 // Token utilities - centralized helpers
-export * from './utilities';
-export * from './typographyUtils';
+export {
+  colorUtils,
+  themeUtils,
+  performanceUtils,
+  cssUtils,
+} from './utilities';
 export * from './breakpointUtils';
+
+// Typography utilities with renamed exports to avoid conflicts
+export {
+  fontUtils,
+  semanticUtils,
+  validationUtils,
+  performanceUtils as typographyPerformanceUtils,
+} from './typographyUtils';
 
 // Re-export legacy tokens for backward compatibility
 export const tokens = designTokens;

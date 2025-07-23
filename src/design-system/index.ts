@@ -21,10 +21,10 @@ export * from './components';
 // === UTILITIES ===
 // Design system utilities and helpers
 export { 
-  tokenUtils, 
   colorUtils, 
   themeUtils, 
   performanceUtils,
+  cssUtils,
   fontUtils,
   semanticUtils,
   validationUtils,
@@ -33,7 +33,6 @@ export {
   containerQueries,
   responsiveUtils,
   viewportUtils,
-  cssUtils,
 } from './tokens';
 
 // === TYPES ===
