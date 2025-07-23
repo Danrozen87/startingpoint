@@ -43,7 +43,7 @@ interface UserReport {
 
 class ErrorReporter {
   private endpoint: string | null = null;
-  private isEnabled: boolean = process.env.NODE_ENV === 'production';
+  private isEnabled: boolean = import.meta.env.MODE === 'production';
   private errorQueue: ErrorReport[] = [];
   private performanceQueue: PerformanceReport[] = [];
   private userQueue: UserReport[] = [];
@@ -67,7 +67,7 @@ class ErrorReporter {
   }
 
   private getBuildId(): string {
-    return process.env.VITE_BUILD_ID || 'dev';
+    return import.meta.env.VITE_BUILD_ID || 'dev';
   }
 
   private generateFingerprint(error: Error): string {
