@@ -51,15 +51,15 @@ class Logger {
 
   constructor(config: Partial<LoggerConfig> = {}) {
     this.config = {
-      level: process.env.NODE_ENV === 'production' ? 'warn' : 'debug',
-      enableBatching: process.env.NODE_ENV === 'production',
+      level: import.meta.env.MODE === 'production' ? 'warn' : 'debug',
+      enableBatching: import.meta.env.MODE === 'production',
       batchSize: 50,
       batchTimeout: 5000,
-      enableSampling: process.env.NODE_ENV === 'production',
+      enableSampling: import.meta.env.MODE === 'production',
       samplingRate: 0.1, // 10% sampling in production
-      enableConsole: process.env.NODE_ENV === 'development',
+      enableConsole: import.meta.env.DEV,
       enableStorage: true,
-      enableRemote: process.env.NODE_ENV === 'production',
+      enableRemote: import.meta.env.MODE === 'production',
       ...config,
     };
 
@@ -79,7 +79,7 @@ class Logger {
 
   private getBuildId(): string {
     // In a real app, this would come from build process
-    return process.env.VITE_BUILD_ID || 'dev';
+    return import.meta.env.VITE_BUILD_ID || 'dev';
   }
 
   private shouldLog(level: LogLevel): boolean {
