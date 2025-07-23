@@ -61,15 +61,17 @@ export const animationUtils = {
   createAccessibleAnimation: (
     animation: React.CSSProperties,
     fallback: React.CSSProperties = {}
-  ): React.CSSProperties => ({
-    ...animation,
-    '@media (prefers-reduced-motion: reduce)': {
-      animation: 'none',
-      transition: 'none',
-      transform: 'none',
-      ...fallback,
-    },
-  }),
+  ): React.CSSProperties => {
+    if (animationUtils.prefersReducedMotion()) {
+      return {
+        animation: 'none',
+        transition: 'none',
+        transform: 'none',
+        ...fallback,
+      };
+    }
+    return animation;
+  },
 
   // Create entrance animation sequence
   createEntranceSequence: (

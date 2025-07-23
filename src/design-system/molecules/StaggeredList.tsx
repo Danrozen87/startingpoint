@@ -58,9 +58,9 @@ const StaggeredList = React.memo(React.forwardRef<HTMLDivElement, StaggeredListP
           ? { opacity: 1, transform: 'none' }
           : animationUtils.createStaggeredAnimation(index, staggerDelay, `${animationType}-fade-up`);
 
-        return React.cloneElement(child, {
+        return React.cloneElement(child as React.ReactElement<any>, {
           style: {
-            ...child.props.style,
+            ...(child.props.style || {}),
             ...animationStyles,
           },
           className: cn(
