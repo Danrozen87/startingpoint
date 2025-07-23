@@ -74,29 +74,8 @@ interface TypographyProps
   fluid?: boolean;
 }
 
-const Typography = React.memo(React.forwardRef<HTMLElement, TypographyProps>(
-  ({ className, variant, color, align, responsive, as, children, fluid, ...props }, ref) => {
-    const Component = as || getDefaultElement(variant);
-    
-    return (
-      <Component
-        className={cn(
-          typographyVariants({ variant, color, align, responsive }),
-          fluid && 'text-pretty',
-          className
-        )}
-        ref={ref}
-        {...props}
-      >
-        {children}
-      </Component>
-    );
-  }
-));
-
-Typography.displayName = 'Typography';
-
-function getDefaultElement(variant: string | null | undefined): React.ElementType {
+// Optimized element mapping with memoization
+const getDefaultElement = React.useCallback((variant: string | null | undefined): React.ElementType => {
   switch (variant) {
     case 'heroTitle':
     case 'h1':
@@ -133,7 +112,32 @@ function getDefaultElement(variant: string | null | undefined): React.ElementTyp
     default:
       return 'p';
   }
-}
+}, []);
+
+const Typography = React.memo(React.forwardRef<HTMLElement, TypographyProps>(
+  ({ className, variant, color, align, responsive, as, children, fluid, ...props }, ref) => {
+    const Component = as || getDefaultElement(variant);
+    
+    // Memoize className computation
+    const memoizedClassName = React.useMemo(() => cn(
+      typographyVariants({ variant, color, align, responsive }),
+      fluid && 'text-pretty',
+      className
+    ), [variant, color, align, responsive, fluid, className]);
+    
+    return (
+      <Component
+        className={memoizedClassName}
+        ref={ref}
+        {...props}
+      >
+        {children}
+      </Component>
+    );
+  }
+));
+
+Typography.displayName = 'Typography';
 
 export { Typography, typographyVariants };
 export type { TypographyProps };

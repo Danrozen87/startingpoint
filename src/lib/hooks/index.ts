@@ -7,3 +7,4 @@ export * from './useLazyRoute';
 export * from './useStaggeredReveal';
 export * from './useScrollAnimation';
 export * from './usePurposefulTransition';
+export * from './useDesignSystem';

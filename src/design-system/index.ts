@@ -1,45 +1,57 @@
 
-// Perfect barrel export for entire design system
-// AI-optimized structure with logical organization
+// Optimized barrel export for entire design system
+// Tree-shaking optimized with granular exports
 
-// === TOKENS ===
-// Core design tokens - colors, spacing, typography, animations, elevation, breakpoints
-export * from './tokens';
-
-// === ATOMS ===
-// Basic building blocks - typography, layout, containers
-export * from './atoms';
-
-// === MOLECULES ===
-// Complex components built from atoms
-export * from './molecules';
-
-// === COMPONENTS ===
-// Development and utility components
-export * from './components';
+// === CORE TOKENS ===
+export {
+  designTokens,
+  colorTokens,
+  colorCategories,
+  spacingTokens,
+  getSpacing,
+  typographyTokens,
+  animationTokens,
+  elevationTokens,
+  breakpointTokens,
+  breakpointCategories,
+  containerSizes,
+  fluidSpacing,
+} from './tokens';
 
 // === UTILITIES ===
-// Design system utilities and helpers
-export { 
-  colorUtils, 
-  themeUtils, 
+export {
+  colorUtils,
+  themeUtils,
   performanceUtils,
   cssUtils,
   fontUtils,
   semanticUtils,
   validationUtils,
-  performanceUtils as typographyPerformanceUtils,
-  mediaQueries,
-  containerQueries,
-  responsiveUtils,
-  viewportUtils,
   animationUtils,
   animationPerformanceUtils,
   animationSystemUtils,
 } from './tokens';
 
+// === ATOMIC COMPONENTS ===
+export { Typography } from './atoms/Typography';
+export { Box } from './atoms/Box';
+export { Stack } from './atoms/Stack';
+export { Container } from './atoms/Container';
+export { Section } from './atoms/Section';
+
+// === MOLECULAR COMPONENTS ===
+export { LoadingSpinner } from './molecules/LoadingSpinner';
+export { EmptyState } from './molecules/EmptyState';
+export { StatusIndicator } from './molecules/StatusIndicator';
+export { AnimatedReveal } from './molecules/AnimatedReveal';
+export { StaggeredList } from './molecules/StaggeredList';
+export { MorphingContainer } from './molecules/MorphingContainer';
+export { PurposefulFade } from './molecules/PurposefulFade';
+
+// === DEVELOPMENT COMPONENTS ===
+export { ColorPalette } from './components/ColorPalette';
+
 // === TYPES ===
-// All design system types for better TypeScript support
 export type {
   ColorToken,
   ColorCategory,
@@ -53,17 +65,11 @@ export type {
   FontFamily,
   SemanticTypography,
   BreakpointToken,
-} from './tokens';
-
-export type {
   TypographyProps,
   BoxProps,
   StackProps,
   ContainerProps,
   SectionProps,
-} from './atoms';
-
-export type {
   LoadingSpinnerProps,
   EmptyStateProps,
   StatusIndicatorProps,
@@ -71,8 +77,22 @@ export type {
   StaggeredListProps,
   MorphingContainerProps,
   PurposefulFadeProps,
-} from './molecules';
+} from './tokens';
 
-// === LEGACY SUPPORT ===
-// Backward compatibility exports
-export { tokens as legacyTokens } from './tokens';
+// === PERFORMANCE OPTIMIZATIONS ===
+export const preloadDesignSystem = () => {
+  if (typeof window !== 'undefined') {
+    // Preload critical design tokens
+    performanceUtils.preloadColors();
+    
+    // Preload critical fonts
+    import('./tokens/typographyUtils').then(({ performanceUtils: typographyPerf }) => {
+      typographyPerf.preloadFonts();
+    });
+    
+    // Preload animation styles
+    import('./tokens/animationUtils').then(({ animationPerformanceUtils }) => {
+      animationPerformanceUtils.preloadAnimationStyles();
+    });
+  }
+};

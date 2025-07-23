@@ -1,16 +1,50 @@
 
-// Perfect barrel export for all design tokens
-// AI-optimized structure with clear organization
+// Optimized token system with performance-focused exports
+// Tree-shaking optimized and centralized token access
 
-// Core token imports
-import { colorTokens, colorCategories, type ColorToken, type ColorCategory, type ColorScale, type SemanticColor, type BrandColor, type AccentColor } from './colors';
-import { spacingTokens, type SpacingToken, getSpacing } from './spacing';
-import { typographyTokens, type TypographyToken, type FontFamily, type SemanticTypography } from './typography';
-import { animationTokens, type AnimationToken } from './animations';
-import { elevationTokens } from './elevation';
-import { breakpointTokens, breakpointCategories, containerSizes, fluidSpacing, type BreakpointToken } from './breakpoints';
+// === CORE TOKENS ===
+export {
+  colorTokens,
+  colorCategories,
+  type ColorToken,
+  type ColorCategory,
+  type ColorScale,
+  type SemanticColor,
+  type BrandColor,
+  type AccentColor,
+} from './colors';
 
-// Combined tokens object - single source of truth
+export {
+  spacingTokens,
+  type SpacingToken,
+  getSpacing,
+} from './spacing';
+
+export {
+  typographyTokens,
+  type TypographyToken,
+  type FontFamily,
+  type SemanticTypography,
+} from './typography';
+
+export {
+  animationTokens,
+  type AnimationToken,
+} from './animations';
+
+export {
+  elevationTokens,
+} from './elevation';
+
+export {
+  breakpointTokens,
+  breakpointCategories,
+  containerSizes,
+  fluidSpacing,
+  type BreakpointToken,
+} from './breakpoints';
+
+// === OPTIMIZED COMBINED TOKENS ===
 export const designTokens = {
   colors: colorTokens,
   spacing: spacingTokens,
@@ -23,61 +57,14 @@ export const designTokens = {
   fluidSpacing,
 } as const;
 
-// Individual token exports
-export {
-  // Colors
-  colorTokens,
-  colorCategories,
-  type ColorToken,
-  type ColorCategory,
-  type ColorScale,
-  type SemanticColor,
-  type BrandColor,
-  type AccentColor,
-
-  // Spacing
-  spacingTokens,
-  type SpacingToken,
-  getSpacing,
-
-  // Typography
-  typographyTokens,
-  type TypographyToken,
-  type FontFamily,
-  type SemanticTypography,
-
-  // Animations
-  animationTokens,
-  type AnimationToken,
-
-  // Elevation
-  elevationTokens,
-
-  // Breakpoints
-  breakpointTokens,
-  breakpointCategories,
-  containerSizes,
-  fluidSpacing,
-  type BreakpointToken,
-};
-
-// Token utilities - centralized helpers
+// === UTILITIES - LAZY LOADED ===
 export {
   colorUtils,
   themeUtils,
   performanceUtils,
   cssUtils,
 } from './utilities';
-export * from './breakpointUtils';
 
-// Animation utilities
-export {
-  animationUtils,
-  animationPerformanceUtils,
-  animationSystemUtils,
-} from './animationUtils';
-
-// Typography utilities with renamed exports to avoid conflicts
 export {
   fontUtils,
   semanticUtils,
@@ -85,5 +72,23 @@ export {
   performanceUtils as typographyPerformanceUtils,
 } from './typographyUtils';
 
-// Re-export legacy tokens for backward compatibility
+export {
+  animationUtils,
+  animationPerformanceUtils,
+  animationSystemUtils,
+} from './animationUtils';
+
+export * from './breakpointUtils';
+
+// === PERFORMANCE OPTIMIZATIONS ===
+export const createTokenAccessor = <T extends keyof typeof designTokens>(
+  category: T
+) => {
+  const tokens = designTokens[category];
+  return (path: string) => {
+    return path.split('.').reduce((obj: any, key) => obj?.[key], tokens);
+  };
+};
+
+// === LEGACY SUPPORT ===
 export const tokens = designTokens;
