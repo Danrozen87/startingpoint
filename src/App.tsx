@@ -1,42 +1,79 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { WebContainer } from '@webcontainer/api';
 
 function App() {
+  const [status, setStatus] = useState('Initializing...');
   const [instance, setInstance] = useState(null);
-  const [output, setOutput] = useState('');
+  const [previewUrl, setPreviewUrl] = useState('');
 
   useEffect(() => {
     let webcontainerInstance;
 
     async function init() {
-      webcontainerInstance = await WebContainer.boot();
-      setInstance(webcontainerInstance);
+      try {
+        // Boot WebContainer
+        webcontainerInstance = await WebContainer.boot();
+        setInstance(webcontainerInstance);
+        setStatus('WebContainer ready');
 
-      // Listen for messages from parent
-      window.addEventListener('message', async (event) => {
-        if (event.data.action === 'runCode') {
-          await webcontainerInstance.mount({
-            'index.js': {
-              file: { contents: event.data.code }
+        // Listen for messages from parent (Lovable)
+        window.addEventListener('message', async (event) => {
+          // Accept messages from any origin during development
+          const { action, files } = event.data;
+
+          if (action === 'mountProject') {
+            setStatus('Mounting project files...');
+            
+            // Mount all project files
+            await webcontainerInstance.mount(files);
+            
+            // Install dependencies
+            setStatus('Installing dependencies...');
+            const installProcess = await webcontainerInstance.spawn('npm', ['install']);
+            
+            installProcess.output.pipeTo(new WritableStream({
+              write(data) {
+                console.log(data);
+              }
+            }));
+            
+            const installExitCode = await installProcess.exit;
+            
+            if (installExitCode !== 0) {
+              setStatus('Failed to install dependencies');
+              return;
             }
-          });
-
-          const process = await webcontainerInstance.spawn('node', ['index.js']);
-          
-          process.output.pipeTo(new WritableStream({
-            write(data) {
-              setOutput(prev => prev + data);
+            
+            // Start dev server
+            setStatus('Starting development server...');
+            const devProcess = await webcontainerInstance.spawn('npm', ['run', 'dev']);
+            
+            devProcess.output.pipeTo(new WritableStream({
+              write(data) {
+                console.log(data);
+              }
+            }));
+            
+            // Wait for server to be ready
+            webcontainerInstance.on('server-ready', (port, url) => {
+              setStatus('Server ready!');
+              setPreviewUrl(url);
+              
+              // Send preview URL back to parent
               window.parent.postMessage({
-                type: 'output',
-                data: data
+                type: 'previewReady',
+                url: url
               }, event.origin);
-            }
-          }));
-        }
-      });
+            });
+          }
+        });
 
-      // Notify parent that WebContainer is ready
-      window.parent.postMessage({ type: 'ready' }, '*');
+        // Notify parent that WebContainer is ready
+        window.parent.postMessage({ type: 'ready' }, '*');
+      } catch (error) {
+        setStatus(`Error: ${error.message}`);
+        console.error('WebContainer initialization failed:', error);
+      }
     }
 
     init();
@@ -47,11 +84,28 @@ function App() {
   }, []);
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'monospace' }}>
-      <h3>WebContainer Host</h3>
-      <pre style={{ background: '#f0f0f0', padding: '10px' }}>
-        {output || 'Waiting for code...'}
-      </pre>
+    <div style={{ 
+      padding: '20px', 
+      fontFamily: 'monospace',
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column'
+    }}>
+      <h3>External WebContainer Host</h3>
+      <p>Status: {status}</p>
+      
+      {previewUrl && (
+        <iframe
+          src={previewUrl}
+          style={{
+            width: '100%',
+            flex: 1,
+            border: '1px solid #ccc',
+            marginTop: '20px'
+          }}
+          title="Preview"
+        />
+      )}
     </div>
   );
 }
