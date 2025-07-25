@@ -16,7 +16,10 @@ function App() {
         setInstance(webcontainerInstance);
         setStatus('WebContainer ready');
 
-        // Listen for messages from parent (Lovable)
+        // IMMEDIATELY notify parent that WebContainer is ready
+        window.parent.postMessage({ type: 'ready' }, '*');
+
+        // THEN set up message listener
         window.addEventListener('message', async (event) => {
           console.log('📨 Received message:', event.data);
           
@@ -86,8 +89,6 @@ function App() {
           }
         });
 
-        // Notify parent that WebContainer is ready
-        window.parent.postMessage({ type: 'ready' }, '*');
       } catch (error) {
         setStatus(`Error: ${error.message}`);
         console.error('WebContainer initialization failed:', error);
