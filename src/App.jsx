@@ -87,7 +87,7 @@ function App() {
         });
 
         // Notify parent that WebContainer is ready
-        window.parent.postMessage({ type: 'READY' }, '*');
+        window.parent.postMessage({ type: 'ready' }, '*');
       } catch (error) {
         setStatus(`Error: ${error.message}`);
         console.error('WebContainer initialization failed:', error);
