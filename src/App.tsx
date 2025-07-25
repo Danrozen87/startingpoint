@@ -1,49 +1,59 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LazyIndexPage from "./pages/LazyIndex";
-import LazyNotFoundPage from "./pages/LazyNotFound";
-import PerformanceMonitor from "./components/dev/PerformanceMonitor";
-import EnhancedLoggingDashboard from "./components/dev/EnhancedLoggingDashboard";
-import { AccessibilityProvider } from '@/components/providers/AccessibilityProvider';
+import { useEffect, useRef, useState } from 'react';
+import { WebContainer } from '@webcontainer/api';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 3,
-      retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      gcTime: 10 * 60 * 1000, // 10 minutes (replaces cacheTime)
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-    },
-  },
-});
+function App() {
+  const [instance, setInstance] = useState(null);
+  const [output, setOutput] = useState('');
 
-export default function App() {
+  useEffect(() => {
+    let webcontainerInstance;
+
+    async function init() {
+      webcontainerInstance = await WebContainer.boot();
+      setInstance(webcontainerInstance);
+
+      // Listen for messages from parent
+      window.addEventListener('message', async (event) => {
+        if (event.data.action === 'runCode') {
+          await webcontainerInstance.mount({
+            'index.js': {
+              file: { contents: event.data.code }
+            }
+          });
+
+          const process = await webcontainerInstance.spawn('node', ['index.js']);
+          
+          process.output.pipeTo(new WritableStream({
+            write(data) {
+              setOutput(prev => prev + data);
+              window.parent.postMessage({
+                type: 'output',
+                data: data
+              }, event.origin);
+            }
+          }));
+        }
+      });
+
+      // Notify parent that WebContainer is ready
+      window.parent.postMessage({ type: 'ready' }, '*');
+    }
+
+    init();
+
+    return () => {
+      webcontainerInstance?.teardown();
+    };
+  }, []);
+
   return (
-    <AccessibilityProvider>
-      <div className="min-h-screen bg-background font-sans antialiased">
-        <div id="main-content" className="relative flex min-h-screen flex-col">
-          <QueryClientProvider client={queryClient}>
-            <TooltipProvider>
-              <Toaster />
-              <Sonner />
-              <BrowserRouter>
-                <Routes>
-                  <Route path="/" element={<LazyIndexPage />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<LazyNotFoundPage />} />
-                </Routes>
-              </BrowserRouter>
-              <PerformanceMonitor />
-              <EnhancedLoggingDashboard />
-            </TooltipProvider>
-          </QueryClientProvider>
-        </div>
-      </div>
-    </AccessibilityProvider>
+    <div style={{ padding: '20px', fontFamily: 'monospace' }}>
+      <h3>WebContainer Host</h3>
+      <pre style={{ background: '#f0f0f0', padding: '10px' }}>
+        {output || 'Waiting for code...'}
+      </pre>
+    </div>
   );
 }
+
+export default App;
