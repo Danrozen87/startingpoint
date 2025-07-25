@@ -18,58 +18,76 @@ function App() {
 
         // Listen for messages from parent (Lovable)
         window.addEventListener('message', async (event) => {
-          // Accept messages from any origin during development
-          const { action, files } = event.data;
+          console.log('📨 Received message:', event.data);
+          
+          const { type, payload, id } = event.data;
 
-          if (action === 'mountProject') {
+          if (type === 'MOUNT_FILES') {
+            const { files } = payload;
             setStatus('Mounting project files...');
             
-            // Mount all project files
-            await webcontainerInstance.mount(files);
-            
-            // Install dependencies
-            setStatus('Installing dependencies...');
-            const installProcess = await webcontainerInstance.spawn('npm', ['install']);
-            
-            installProcess.output.pipeTo(new WritableStream({
-              write(data) {
-                console.log(data);
-              }
-            }));
-            
-            const installExitCode = await installProcess.exit;
-            
-            if (installExitCode !== 0) {
-              setStatus('Failed to install dependencies');
-              return;
-            }
-            
-            // Start dev server
-            setStatus('Starting development server...');
-            const devProcess = await webcontainerInstance.spawn('npm', ['run', 'dev']);
-            
-            devProcess.output.pipeTo(new WritableStream({
-              write(data) {
-                console.log(data);
-              }
-            }));
-            
-            // Wait for server to be ready
-            webcontainerInstance.on('server-ready', (port, url) => {
-              setStatus('Server ready!');
-              setPreviewUrl(url);
+            try {
+              // Mount all project files
+              await webcontainerInstance.mount(files);
               
-              // Send preview URL back to parent
+              // Send success response
               window.parent.postMessage({
-                type: 'previewReady',
-                url: url
+                type: 'MOUNT_FILES',
+                id,
+                success: true
               }, event.origin);
-            });
+              
+              // Install dependencies
+              setStatus('Installing dependencies...');
+              const installProcess = await webcontainerInstance.spawn('npm', ['install']);
+              
+              installProcess.output.pipeTo(new WritableStream({
+                write(data) {
+                  console.log(data);
+                }
+              }));
+              
+              const installExitCode = await installProcess.exit;
+              
+              if (installExitCode !== 0) {
+                setStatus('Failed to install dependencies');
+                return;
+              }
+              
+              // Start dev server
+              setStatus('Starting development server...');
+              const devProcess = await webcontainerInstance.spawn('npm', ['run', 'dev']);
+              
+              devProcess.output.pipeTo(new WritableStream({
+                write(data) {
+                  console.log(data);
+                }
+              }));
+              
+              // Wait for server to be ready
+              webcontainerInstance.on('server-ready', (port, url) => {
+                setStatus('Server ready!');
+                setPreviewUrl(url);
+                
+                // Send server URL back to parent
+                window.parent.postMessage({
+                  type: 'SERVER_URL',
+                  payload: { url }
+                }, event.origin);
+              });
+              
+            } catch (error) {
+              window.parent.postMessage({
+                type: 'ERROR',
+                id,
+                payload: { error: error.message }
+              }, event.origin);
+            }
           }
         });
 
         // Notify parent that WebContainer is ready
-        window.parent.postMessage({ type: 'ready' }, '*');
+        window.parent.postMessage({ type: 'READY' }, '*');
       } catch (error) {
         setStatus(`Error: ${error.message}`);
         console.error('WebContainer initialization failed:', error);
